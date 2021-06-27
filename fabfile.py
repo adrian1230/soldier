@@ -6,8 +6,10 @@ def helloworld(ctx):
 	print("Hello World")
 
 @task
-def listdir(ctx):
-	run('dir')
+def listdirmain(ctx):
+	with conn("172.105.4.75","root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
+		with f.cd("/var/www/html/"):
+			f.run("ls -la")
 
 @task
 def createfile(ctx):
