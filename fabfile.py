@@ -9,4 +9,6 @@ def helloworld(ctx):
 def listdir(ctx):
 	run('dir')
 
-
+@task
+def createfile(ctx):
+	run("echo 'This is it!' >> test.txt")
