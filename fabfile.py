@@ -19,7 +19,7 @@ def inspect(ctx):
 		"172.105.4.75",
 		user="root",
 		connect_kwargs={
-			"key_filename": ""
+			"key_filename": "../../.ssh/id_rsa.pub"
 		}
 		) as c:
 		with c.cd("/var/www/html/icharbeitezuhaus.com/public_html/"):
