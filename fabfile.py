@@ -12,8 +12,19 @@ def listdirmain(ctx):
 			f.run("ls -la")
 
 @task
+def installbasic(ctx):
+	with conn(
+		"172.105.4.75",
+		user="root",
+		connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}
+	) as c:
+		c.run("yum install mariadb")
+		c.run("service httpd restart")
+		c.run("systemctl status httpd.service")
+
+@task
 def createfile(ctx):
-	run("echo 'This is it!' >> test.txt")
+	run("echo This is it! >> test.txt")
 
 @task
 def inspect(ctx):
