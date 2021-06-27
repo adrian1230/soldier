@@ -15,6 +15,12 @@ def createfile(ctx):
 
 @task
 def inspect(ctx):
-	with conn("172.105.4.75") as c:
+	with conn(
+		"172.105.4.75",
+		user="root",
+		connect_kwargs={
+			"key_filename": ""
+		}
+		) as c:
 		with c.cd("/var/www/html/icharbeitezuhaus.com/public_html/"):
 			c.run("ls -la")
