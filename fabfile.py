@@ -32,3 +32,9 @@ def geterrorlogs(ctx):
 			f.run("cat error.log >> errors.txt")
 			f.get("/var/www/html/icharbeitezuhaus.com/logs/errors.txt","./errors.txt")
                         
+@task
+def upload(ctx):
+	run("echo this is not drilling > meme.txt")
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
+		with f.cd("/var/www/html/icharbeitezuhaus.com/logs/"):
+			f.put("/Users/dexio/Desktop/soldier/meme.txt","/var/www/html/icharbeitezuhaus.com/logs/")
