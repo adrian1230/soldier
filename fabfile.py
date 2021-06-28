@@ -2,6 +2,24 @@ from fabric import Connection as conn
 from invoke import task, run, env, sudo
 
 @task
+def hosttypelocal(ctx):
+	run('uname -s')
+
+@task
+def hosttyperemote(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
+		f.run('uname -s')
+
+@task
+def diskspaceremote(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
+		f.run('df')
+
+@task
+def diskspacelocal(ctx):
+	run('df')
+
+@task
 def createnewapp(ctx):
 	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
 		with f.cd("/var/www/html/"):
@@ -38,3 +56,14 @@ def upload(ctx):
 	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
 		with f.cd("/var/www/html/icharbeitezuhaus.com/logs/"):
 			f.put("/Users/dexio/Desktop/soldier/meme.txt","/var/www/html/icharbeitezuhaus.com/logs/")
+
+@task
+def restart(ctx):
+	reboot()
+
+@task 
+def main(ctx):
+	pass
+
+# if __name__ == "__main__":
+# 	pass
