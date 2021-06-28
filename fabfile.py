@@ -13,15 +13,13 @@ def listdirmain(ctx):
 
 @task
 def createnewapp(ctx):
-        with conn(
-		"172.105.4.75",
-		"root",
-		connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}
-		) as f:
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
 		with f.cd("/var/www/html/"):
-			f.run("npx create-react-app myapp")
-			with f.cd("/myapp"):
-				f.run("ls -la")
+			f.run("ls")
+			f.run("npx create-react-app lol")
+			f.run("ls")
+			with f.cd("/lol/"):
+				f.run("cat README.md")
 
 @task
 def checkstatus(ctx):
@@ -48,3 +46,16 @@ def inspect(ctx):
 		) as c:
 		with c.cd("/var/www/html/icharbeitezuhaus.com/public_html/"):
 			c.run("ls -la")
+
+@task
+def geterrorlogs(ctx):
+        with conn(
+                        "172.105.4.75",
+                        user="root",
+                        connect_kwargs={
+                                "key_filename": "../../.ssh/id_rsa.pub"
+                        }
+                ) as fd:
+                with fd.cd("/var/www/html/icharbeitezuhaus.com/logs/"):
+                        fd.run("ls")
+                        
