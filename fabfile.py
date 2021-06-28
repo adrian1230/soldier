@@ -2,22 +2,10 @@ from fabric import Connection as conn
 from invoke import task, run, env, sudo
 
 @task
-def helloworld(ctx):
-	print("Hello World")
-
-@task
-def listdirmain(ctx):
-	with conn("172.105.4.75","root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
-		with f.cd("/var/www/html/"):
-			f.run("ls -la")
-
-@task
 def createnewapp(ctx):
 	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
 		with f.cd("/var/www/html/"):
-			f.run("ls")
 			f.run("npx create-react-app lol")
-			f.run("ls")
 			with f.cd("/lol/"):
 				f.run("cat README.md")
 
@@ -30,6 +18,12 @@ def checkstatus(ctx):
 	) as c:
 		c.run("service httpd restart")
 		c.run("systemctl status httpd.service")
+
+@task
+def installbasic(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
+		f.run("yum install openssh-server")
+		f.run("yum install php python3 node npm")
 
 @task
 def createfile(ctx):
