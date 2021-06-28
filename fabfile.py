@@ -2,6 +2,11 @@ from fabric import Connection as conn
 from invoke import task, run, env, sudo
 
 @task
+def update(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
+		f.run("yum update -y")
+
+@task
 def hosttypelocal(ctx):
 	run('uname -s')
 
@@ -40,8 +45,8 @@ def checkstatus(ctx):
 @task
 def installbasic(ctx):
 	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
-		f.run("yum install openssh-server")
-		f.run("yum install php python3 node npm")
+		f.run("yum install openssh-server -y")
+		f.run("yum install php python3 node npm -y")
 
 @task
 def geterrorlogs(ctx):
