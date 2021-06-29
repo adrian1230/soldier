@@ -57,7 +57,7 @@ def checkstatus(ctx):
 @task
 def installbasic(ctx):
 	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
-		f.run("yum install openssh-server -y")
+		f.run("yum install openssh-server git -y")
 		f.run("yum install php python3 node npm -y")
 
 @task
@@ -81,3 +81,11 @@ def restart(ctx):
 @task 
 def main(ctx):
 	pass
+
+@task
+def github(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+		with f.cd(env.appsrc):
+			if os.path.exists(".git") != True:
+				f.run("git init")
+			f.run("git add .; git commit -m 'adrian@dexio'; clear; ls")
