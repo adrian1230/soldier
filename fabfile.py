@@ -89,3 +89,15 @@ def github(ctx):
 			if os.path.exists(".git") != True:
 				f.run("git init")
 			f.run("git add .; git commit -m 'adrian@dexio'; clear; ls")
+
+@task
+def removesrcd(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+		with f.cd(env.appsrc):
+			f.run("rm -rf * -y")
+
+@task
+def removeparentd(ctx):
+	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+		with f.cd(env.parentdirectory):
+			f.run("rm -rf * -y")
