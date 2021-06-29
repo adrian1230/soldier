@@ -25,6 +25,13 @@ def diskspacelocal(ctx):
 	run('df')
 
 @task
+def test(ctx, text):
+	print("{}".format(text))
+	# fab test --text 'this is it'
+	# fab test --text='this is it'
+	# fab test 'this is it'
+
+@task
 def checkstatus(ctx):
 	with conn(
 		"172.105.4.75",
