@@ -24,8 +24,11 @@ def diskspaceremote(ctx):
 def diskspacelocal(ctx):
 	run('df')
 
-@task
+@task(help={'text':'this is it ya'})
 def test(ctx, text):
+	'''
+	testing
+	'''
 	print("{}".format(text))
 	# fab test --text 'this is it'
 	# fab test --text='this is it'
