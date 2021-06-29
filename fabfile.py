@@ -69,6 +69,3 @@ def restart(ctx):
 @task 
 def main(ctx):
 	pass
-
-# if __name__ == "__main__":
-# 	pass
