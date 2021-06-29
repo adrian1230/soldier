@@ -25,14 +25,6 @@ def diskspacelocal(ctx):
 	run('df')
 
 @task
-def createnewapp(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":"../../.ssh/id_rsa.pub"}) as f:
-		with f.cd("/var/www/html/"):
-			f.run("npx create-react-app lol")
-			with f.cd("/lol/"):
-				f.run("cat README.md")
-
-@task
 def checkstatus(ctx):
 	with conn(
 		"172.105.4.75",
