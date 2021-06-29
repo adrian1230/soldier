@@ -1,5 +1,9 @@
 from fabric import Connection as conn
 from invoke import task, run, env, sudo
+import numpy as np
+import requests as reqs
+import os, sys
+import json
 
 @task
 def update(ctx):
