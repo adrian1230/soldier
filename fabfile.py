@@ -4,6 +4,7 @@ import numpy as np
 import os, sys
 import json
 
+env.ip = "172.105.4.75"
 env.parentdirectory = '/var/www/html'
 env.appdirectory = '{}/icharbeitezuhaus.com'.format(env.parentdirectory)
 env.applogs = '{}/logs'.format(env.appdirectory)
@@ -13,7 +14,7 @@ keyfileloc = "../../.ssh/id_rsa.pub"
 
 @task
 def update(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		f.run("yum update -y")
 
 @task
@@ -22,12 +23,12 @@ def hosttypelocal(ctx):
 
 @task
 def hosttyperemote(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		f.run('uname -s')
 
 @task
 def diskspaceremote(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		f.run('df')
 
 @task
@@ -47,7 +48,7 @@ def test(ctx, text):
 @task
 def checkstatus(ctx):
 	with conn(
-		"172.105.4.75",
+		env.ip,
 		user="root",
 		connect_kwargs={"key_filename":keyfileloc}
 	) as c:
@@ -56,13 +57,13 @@ def checkstatus(ctx):
 
 @task
 def installbasic(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		f.run("yum install openssh-server git -y")
 		f.run("yum install php python3 node npm -y")
 
 @task
 def geterrorlogs(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.applogs):
 			f.run("cat error.log >> errors.txt")
 			f.get("/var/www/html/icharbeitezuhaus.com/logs/errors.txt","./errors.txt")
@@ -70,7 +71,7 @@ def geterrorlogs(ctx):
 @task
 def upload(ctx):
 	run("echo this is not drilling > meme.txt")
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.applogs):
 			f.put("/Users/dexio/Desktop/soldier/meme.txt","/var/www/html/icharbeitezuhaus.com/logs/")
 
@@ -84,7 +85,7 @@ def main(ctx):
 
 @task
 def github(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.appsrc):
 			if os.path.exists(".git") != True:
 				f.run("git init; git config --global user.name 'adrian1230'; git config --global user.email 'yourgmail@gmail.com'")
@@ -93,12 +94,12 @@ def github(ctx):
 
 @task
 def removesrcd(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.appsrc):
 			f.run("rm -rf * -y")
 
 @task
 def removeparentd(ctx):
-	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
+	with conn(env.ip,user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.parentdirectory):
 			f.run("rm -rf * -y")
