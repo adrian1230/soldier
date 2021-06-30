@@ -102,3 +102,16 @@ def removeparentd(ctx):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.parentdirectory):
 			f.run("rm -rf * -y")
+
+@task
+def createnewfiber(ctx, appname):
+	"""
+	golang fiber
+	"""
+	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
+		with f.cd(env.parentdirectory):
+			f.run("mkdir {}".format(appname))
+			with f.cd("{}/{}".format(env.parentdirectory,appname)):
+				f.run("go get github.com/gofiber/fiber/v2")
+				f.run("go mod init {}.com/main".format(appname))
+				f.run("touch main.go")
