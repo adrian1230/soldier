@@ -1,8 +1,6 @@
 from fabric import Connection as conn
 from invoke import task, run, env, sudo
-import numpy as np
-import os, sys
-import json
+import os
 
 env.ip = "172.105.4.75"
 env.user = "root"
