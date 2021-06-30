@@ -87,7 +87,7 @@ def github(ctx):
 	with conn("172.105.4.75",user="root",connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.appsrc):
 			if os.path.exists(".git") != True:
-				f.run("git init; git config --global user.name 'adrian1230'; git config --global user.email 'ichbingesenet@gmail.com'")
+				f.run("git init; git config --global user.name 'adrian1230'; git config --global user.email 'yourgmail@gmail.com'")
 			f.run("cat ~/.gitconfig")
 			f.run("git add .; git commit -m 'adrian@dexio'; clear; ls")
 
