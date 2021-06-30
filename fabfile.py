@@ -112,6 +112,9 @@ def createnewfiber(ctx, appname):
 		with f.cd(env.parentdirectory):
 			f.run("mkdir {}".format(appname))
 			with f.cd("{}/{}".format(env.parentdirectory,appname)):
-				f.run("go get github.com/gofiber/fiber/v2")
 				f.run("go mod init {}.com/main".format(appname))
+				f.run("go get github.com/gofiber/fiber/v2")
 				f.run("touch main.go")
+				f.run("echo web: heroku >> Procfile")
+				f.run("wget https://raw.githubusercontent.com/gofiber/recipes/master/heroku/main.go")
+				f.run("cat *")
