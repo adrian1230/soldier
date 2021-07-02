@@ -130,24 +130,11 @@ def runfiber(ctx, appname):
 
 @task
 def initml(ctx,foldername):
+	run("mv ./archine chinesepaintings")
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.parentdirectory):
 			f.run("mkdir {}".format(foldername))
 			with f.cd("{}/{}".format(env.parentdirectory,foldername)):
 				f.run("mkdir data models")
-				with f.cd("/data/"):
-					f.put("/Users/dexio/Desktop/soldier/archive","/var/www/html/{}/data/".format(foldername))
-					f.run("mv archive chinesepaintings")
-					f.put("/Users/dexio/Desktop/soldier/fire_dataset","/var/www/html/{}/data/".format(foldername))
-					f.put("/Users/dexio/Desktop/soldier/pku-autonomous-driving","/var/www/html/{}/data/".format(foldername))
-					f.run(
-						"ls pku-autonomous-driving; clear; ls fire_dataset; clear; ls chinesepaintings"
-					)
-					with f.cd("{}/{}".format(env.parentdirectory,foldername)):
-						with f.cd("/models/"):
-							f.run("mkdir pkucar fire chinesepaintings")
-							f.run("echo 'import os' >> index.py")
-							f.run("mv index.py pkucar")
-							f.run("mv index.py fire")
-							f.run("mv index.py chinesepaintings")
-							f.run("rm -rf index.py")
+				f.run("mkdir data/fire data/chinesepaintings")
+				
