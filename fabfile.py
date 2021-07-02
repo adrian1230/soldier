@@ -156,5 +156,10 @@ def main(ctx):
 	run("fab createnewfiber --appname 'lol'")
 	run("fab initml --foldername 'mldl'")
 
-if __name__ == "__main__":
-	main()
+# if __name__ == "__main__":
+# 	sys.argv = ['fab','-f', __file__,'update']
+# 	sys.argv = ['fab','-f', __file__,'checkstatus']
+# 	sys.argv = ['fab','-f', __file__,'installbasic']
+# 	sys.argv = ['fab','-f', __file__,"createnewfiber --appname 'lol'"]
+# 	sys.argv = ['fab','-f', __file__,"initml --foldername 'mldl'"]
+# 	main()
