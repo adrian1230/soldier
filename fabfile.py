@@ -1,6 +1,6 @@
-from fabric import Connection as conn
+from fabric import Connection as conn, main
 from invoke import task, run, env, sudo
-import os
+import os, sys
 
 env.ip = "172.105.4.75"
 env.user = "root"
@@ -78,10 +78,6 @@ def upload(ctx):
 def restart(ctx):
 	reboot()
 
-@task 
-def main(ctx):
-	pass
-
 @task
 def github(ctx, user, email):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
@@ -151,3 +147,14 @@ def topremote(ctx):
 def lsmodremote(ctx):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		f.run("lsmod")
+
+@task
+def main(ctx):
+	run("fab update")
+	run("fab checkstatus")
+	run("fab installbasic")
+	run("fab createnewfiber --appname 'lol'")
+	run("fab initml --foldername 'mldl'")
+
+if __name__ == "__main__":
+	main()
