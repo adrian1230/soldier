@@ -58,7 +58,7 @@ def checkstatus(ctx):
 def installbasic(ctx):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		f.run("yum install openssh-server git wget curl -y")
-		f.run("yum install php python3 node tree unzip zip npm -y")
+		f.run("yum install php python3 nodejs tree unzip zip npm -y")
 
 @task
 def geterrorlogs(ctx):
@@ -155,11 +155,3 @@ def main(ctx):
 	run("fab installbasic")
 	run("fab createnewfiber --appname 'lol'")
 	run("fab initml --foldername 'mldl'")
-
-# if __name__ == "__main__":
-# 	sys.argv = ['fab','-f', __file__,'update']
-# 	sys.argv = ['fab','-f', __file__,'checkstatus']
-# 	sys.argv = ['fab','-f', __file__,'installbasic']
-# 	sys.argv = ['fab','-f', __file__,"createnewfiber --appname 'lol'"]
-# 	sys.argv = ['fab','-f', __file__,"initml --foldername 'mldl'"]
-# 	main()
