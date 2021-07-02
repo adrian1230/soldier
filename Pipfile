@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 fabric = "*"
 numpy = "*"
+requests = "*"
 
 [dev-packages]
 

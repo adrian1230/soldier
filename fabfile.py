@@ -57,8 +57,8 @@ def checkstatus(ctx):
 @task
 def installbasic(ctx):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
-		f.run("yum install openssh-server git -y")
-		f.run("yum install php python3 node npm -y")
+		f.run("yum install openssh-server git wget curl -y")
+		f.run("yum install php python3 node tree unzip zip npm -y")
 
 @task
 def geterrorlogs(ctx):
@@ -83,13 +83,13 @@ def main(ctx):
 	pass
 
 @task
-def github(ctx):
+def github(ctx, user, email):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.appsrc):
 			if os.path.exists(".git") != True:
-				f.run("git init; git config --global user.name 'adrian1230'; git config --global user.email 'yourgmail@gmail.com'")
-			f.run("cat ~/.gitconfig")
-			f.run("git add .; git commit -m 'adrian@dexio'; clear; ls")
+				f.run("git init; git config --global user.name {}; git config --global user.email {}".format(user,email))
+			# f.run("cat ~/.gitconfig")
+			f.run("git add .; git commit -m 'msg'; clear; ls")
 
 @task
 def removesrcd(ctx):
@@ -130,11 +130,24 @@ def runfiber(ctx, appname):
 
 @task
 def initml(ctx,foldername):
-	run("mv ./archine chinesepaintings")
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.parentdirectory):
 			f.run("mkdir {}".format(foldername))
-			f.run("cd {}/{}".format(env.parentdirectory,foldername))
-			f.run("mkdir data models")
-			f.run("mkdir data/fire data/chinesepaintings")
-				
+			with f.cd("{}/{}".format(env.parentdirectory,foldername)):
+				f.run("mkdir models data")
+				with f.cd("{}/{}/data".format(env.parentdirectory,foldername)):
+					f.run("wget https://landcover.ai/download/landcover.ai.v1.zip; unzip *.zip")
+				with f.cd("{}/{}/models".format(env.parentdirectory,foldername)):
+					f.run("echo 'import numpy as np' >> index.py")
+			with f.cd("{}/{}".format(env.parentdirectory,foldername)):
+				f.run("tree .")
+			
+@task
+def topremote(ctx):
+	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
+		f.run("top")
+
+@task
+def lsmodremote(ctx):
+	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
+		f.run("lsmod")
