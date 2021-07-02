@@ -134,7 +134,7 @@ def initml(ctx,foldername):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.parentdirectory):
 			f.run("mkdir {}".format(foldername))
-			with f.cd("{}/{}".format(env.parentdirectory,foldername)):
-				f.run("mkdir data models")
-				f.run("mkdir data/fire data/chinesepaintings")
+			f.run("cd {}/{}".format(env.parentdirectory,foldername))
+			f.run("mkdir data models")
+			f.run("mkdir data/fire data/chinesepaintings")
 				
