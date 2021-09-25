@@ -2,10 +2,10 @@ from fabric import Connection as conn, main
 from invoke import task, run, env, sudo
 import os, sys
 
-env.ip = "172.105.4.75"
+env.ip = "ip"
 env.user = "root"
 env.parentdirectory = '/var/www/html'
-env.appdirectory = '{}/icharbeitezuhaus.com'.format(env.parentdirectory)
+env.appdirectory = '{}/domain.com'.format(env.parentdirectory)
 env.applogs = '{}/logs'.format(env.appdirectory)
 env.appsrc = '{}/public_html'.format(env.appdirectory)
 
@@ -65,14 +65,14 @@ def geterrorlogs(ctx):
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.applogs):
 			f.run("cat error.log >> errors.txt")
-			f.get("/var/www/html/icharbeitezuhaus.com/logs/errors.txt","./errors.txt")
+			f.get("/var/www/html/domain.com/logs/errors.txt","./errors.txt")
                         
 @task
 def upload(ctx):
 	run("echo this is not drilling > meme.txt")
 	with conn(env.ip,user=env.user,connect_kwargs={"key_filename":keyfileloc}) as f:
 		with f.cd(env.applogs):
-			f.put("/Users/dexio/Desktop/soldier/meme.txt","/var/www/html/icharbeitezuhaus.com/logs/")
+			f.put("address/meme.txt","/var/www/html/domain.com/logs/")
 
 @task
 def restart(ctx):
